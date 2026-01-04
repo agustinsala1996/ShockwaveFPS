@@ -15,7 +15,7 @@ public abstract class WeaponBase : MonoBehaviour
         currentAmmo = maxAmmo;
     }
 
-    public virtual bool CanFire()
+    public bool CanFire()
     {
         return Time.time >= lastFireTime + fireRate && currentAmmo > 0;
     }
@@ -23,14 +23,22 @@ public abstract class WeaponBase : MonoBehaviour
     public virtual void TryFire()
     {
         if (!CanFire())
+        {
+            if (currentAmmo <= 0)
+                OnEmptyFire();
+
             return;
+        }
 
         Fire();
         currentAmmo--;
         lastFireTime = Time.time;
     }
 
-    public virtual void Fire()
+    protected abstract void Fire();
+
+    protected virtual void OnEmptyFire()
     {
+        Debug.Log("Click! Sin munición");
     }
 }

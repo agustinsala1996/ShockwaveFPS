@@ -1,21 +1,44 @@
-    using UnityEngine;
+using UnityEngine;
 
-    public class HitscanWeapon : WeaponBase
+public class HitscanWeapon : WeaponBase
+{
+    public float range = 100f;
+    public GameObject hitMarkerPrefab;
+
+    Camera playerCamera;
+
+    protected override void Awake()
     {
-        [Header("Hitscan")]
-        [SerializeField] float range = 100f;
-        [SerializeField] LayerMask hitMask;
+        base.Awake();
+        playerCamera = Camera.main;
+    }
 
-        public override void Fire()
+    protected override void Fire()
+    {
+        Ray ray = new Ray(
+            playerCamera.transform.position,
+            playerCamera.transform.forward
+        );
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, range))
         {
-            Camera cam = Camera.main;
-            if (!cam) return;
+            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
+            Debug.Log("Hit: " + hit.collider.name);
 
-            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, range, hitMask))
+            if (hitMarkerPrefab != null)
             {
-                Debug.Log("Hit: " + hit.collider.name);
+                Instantiate(
+                    hitMarkerPrefab,
+                    hit.point,
+                    Quaternion.LookRotation(hit.normal)
+                );
             }
         }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * range, Color.yellow, 1f);
+        }
     }
+}

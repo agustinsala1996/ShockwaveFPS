@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     PlayerController controller;
-    WeaponBase currentWeapon;
+    WeaponHandler weaponHandler;
 
     void Awake()
     {
         controller = GetComponent<PlayerController>();
-        currentWeapon = GetComponentInChildren<WeaponBase>();
+        weaponHandler = GetComponent<WeaponHandler>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -35,9 +35,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnFirePrimary(InputAction.CallbackContext context)
     {
-        if (context.performed && currentWeapon != null)
-        {
-            currentWeapon.Fire();
-        }
+        if (context.performed)
+            weaponHandler.FirePrimary();
     }
 }
