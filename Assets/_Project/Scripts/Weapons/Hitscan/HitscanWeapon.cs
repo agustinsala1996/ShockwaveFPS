@@ -25,7 +25,12 @@ public class HitscanWeapon : WeaponBase
         if (Physics.Raycast(ray, out hit, range))
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
-            Debug.Log("Hit: " + hit.collider.name);
+
+            IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(damage);
+            }
 
             if (hitMarkerPrefab != null)
             {
@@ -35,10 +40,6 @@ public class HitscanWeapon : WeaponBase
                     Quaternion.LookRotation(hit.normal)
                 );
             }
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * range, Color.yellow, 1f);
         }
     }
 }
