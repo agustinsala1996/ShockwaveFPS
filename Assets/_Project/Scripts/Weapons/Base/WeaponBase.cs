@@ -3,7 +3,6 @@ using UnityEngine;
 public abstract class WeaponBase : MonoBehaviour
 {
     //Stats del arma
-    public float damage = 10f;
     public float fireRate = 0.2f;
     public int maxAmmo = 30;
 
@@ -39,6 +38,6 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected virtual void OnEmptyFire()
     {
-        Debug.Log("Sin munición!");
+        Debug.Log("Click! Sin munición");
     }
 }

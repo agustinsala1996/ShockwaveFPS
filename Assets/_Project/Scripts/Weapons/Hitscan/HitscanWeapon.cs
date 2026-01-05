@@ -6,11 +6,13 @@ public class HitscanWeapon : WeaponBase
     public GameObject hitMarkerPrefab;
 
     Camera playerCamera;
+    DamageDealer damageDealer;
 
     protected override void Awake()
     {
         base.Awake();
         playerCamera = Camera.main;
+        damageDealer = GetComponent<DamageDealer>();
     }
 
     protected override void Fire()
@@ -27,9 +29,10 @@ public class HitscanWeapon : WeaponBase
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
 
             IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-            if (damageable != null)
+
+            if (damageable != null && damageDealer != null)
             {
-                damageable.TakeDamage(damage);
+                damageDealer.DealDamage(damageable);
             }
 
             if (hitMarkerPrefab != null)
@@ -40,6 +43,10 @@ public class HitscanWeapon : WeaponBase
                     Quaternion.LookRotation(hit.normal)
                 );
             }
+        }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * range, Color.yellow, 1f);
         }
     }
 }
