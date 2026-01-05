@@ -3,13 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
+    //Movimiento
     public float moveSpeed = 6f;
     public float sprintMultiplier = 1.5f;
     public float gravity = -20f;
     public float jumpForce = 8f;
 
-    [Header("Look")]
+    //Puntero
     public float mouseSensitivity = 2.5f;
     public float maxLookAngle = 80f;
     public Transform cameraPivot;
@@ -33,14 +33,14 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
     }
 
-    // ===== PUBLIC API (Input entra acá) =====
+    // API Publica (Comunicacion)
 
     public void SetMoveInput(Vector2 value) => moveInput = value;
     public void SetLookInput(Vector2 value) => lookInput = value;
     public void SetSprint(bool value) => isSprinting = value;
     public void RequestJump() => jumpRequested = true;
 
-    // ===== LOGIC =====
+    // Logica
 
     void HandleMovement()
     {
