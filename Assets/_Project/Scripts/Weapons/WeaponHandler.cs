@@ -16,4 +16,11 @@ public class WeaponHandler : MonoBehaviour
 
         currentWeapon.TryFire();
     }
+    public void AddAmmo(int amount)
+    {
+        if (currentWeapon == null)
+            return;
+
+        currentWeapon.AddAmmo(amount);
+    }
 }

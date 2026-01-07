@@ -40,4 +40,13 @@ public abstract class WeaponBase : MonoBehaviour
     {
         Debug.Log("Click! Sin munición");
     }
+
+    public virtual void AddAmmo(int amount)
+    {
+        currentAmmo += amount;
+        currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
+
+        Debug.Log($"Ammo actual: {currentAmmo}/{maxAmmo}");
+    }
+
 }
